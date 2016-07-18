@@ -5,14 +5,14 @@
 #include "grove_gesture_paj7620.h"
 #include "grove_led_ws2812.h"
 
-int pinsda = 4;
-int pinscl = 5;
+const uint32_t LOOP_INTERVAL = 400;
+const char* DEFAULT_COLOR = "FF8F07";
 
 uint32_t time;
 
 bool lightOn = false;
 bool strict = false;
-char* color = "FF8F07";
+char* color = DEFAULT_COLOR;
 
 // set the state of the light (on or off)
 void setLight(bool isOn)
@@ -56,7 +56,7 @@ void loop()
     uint32_t now = millis();
 
     // loop every 400ms
-    if (now - time > 400)
+    if (now - time > LOOP_INTERVAL)
     {
         time = now;
         

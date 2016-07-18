@@ -46,3 +46,7 @@ When disabled, everything will work.
 You can enable / disable strict mode using the API:
 
     curl -X POST https://us.wio.seeed.io/v1/node/variable/strict/[true or false]?access_token=[device token]
+
+# Notes
+The loop is only called every 400ms. That means some gestures won't get recognized, and the button must be pressed a bit longer to trigger the event.
+You can change this if you want to.

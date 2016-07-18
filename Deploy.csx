@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
+const string SERVER = "https://us.wio.seeed.io/v1";
+
 // ASK FOR TOKEN
 string _token;
 if (Env.ScriptArgs.Count == 0)
@@ -43,7 +45,7 @@ public async Task Deploy(string token)
     Console.WriteLine("Pushing to server...");
 
     HttpResponseMessage deploy =
-        await client.PostAsync("https://us.wio.seeed.io/v1/cotf/project", new StringContent(json, Encoding.UTF8, "application/json"));
+        await client.PostAsync($"{SERVER}/cotf/project", new StringContent(json, Encoding.UTF8, "application/json"));
 
     if (!deploy.IsSuccessStatusCode)
     {
@@ -57,7 +59,7 @@ public async Task Deploy(string token)
     Console.WriteLine("Starting build...");
 
     HttpResponseMessage build =
-        await client.PostAsync("https://us.wio.seeed.io/v1/ota/trigger", new StringContent(EscapeJson(CONNECTION_CONFIG), Encoding.UTF8, "application/json"));
+        await client.PostAsync($"{SERVER}/ota/trigger", new StringContent(EscapeJson(CONNECTION_CONFIG), Encoding.UTF8, "application/json"));
 
     if (!build.IsSuccessStatusCode)
     {
@@ -69,7 +71,7 @@ public async Task Deploy(string token)
     // 6. LOG OUTPUT
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("Build has been started. You can check its state using the following command:");
-    Console.WriteLine($"curl https://us.wio.seeed.io/v1/ota/status?access_token={token}");
+    Console.WriteLine($"curl {SERVER}/ota/status?access_token={token}");
     client.Dispose();
 }
 
