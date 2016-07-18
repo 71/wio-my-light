@@ -50,39 +50,37 @@ public async Task Deploy(string token)
     if (!deploy.IsSuccessStatusCode)
     {
         client.Dispose();
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Error while pushing to server: {0}", await deploy.Content.ReadAsStringAsync() ?? deploy.ReasonPhrase);
         Environment.Exit((int)deploy.StatusCode);
     }
 
     // 5. START BUILD PROCESS
-    Console.ForegroundColor = ConsoleColor.Red;
+    Console.ForegroundColor = ConsoleColor.Green;
     Console.WriteLine("Starting build...");
 
     HttpResponseMessage build =
-        await client.PostAsync($"{SERVER}/ota/trigger", new StringContent(EscapeJson(CONNECTION_CONFIG), Encoding.UTF8, "application/json"));
+        await client.PostAsync($"{SERVER}/ota/trigger", new StringContent(CONNECTION_CONFIG, Encoding.UTF8, "application/json"));
 
     if (!build.IsSuccessStatusCode)
     {
         client.Dispose();
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Error while triggering build: {0}", await build.Content.ReadAsStringAsync() ?? build.ReasonPhrase);
         Environment.Exit((int)build.StatusCode);
     }
 
     // 6. LOG OUTPUT
+    client.Dispose();
+
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("Build has been started. You can check its state using the following command:");
     Console.WriteLine($"curl {SERVER}/ota/status?access_token={token}");
-    client.Dispose();
+
+    Environment.Exit(0);
 }
 
-public const string CONNECTION_CONFIG = @"{
-    ""board_name"": ""Wio Link v1.0"",
-    ""connections"": [
-        { ""sku"": ""101020003"", ""port"": ""D0"" },
-        { ""sku"": ""104990089"", ""port"": ""D2"" },
-        { ""sku"": ""101020083"", ""port"": ""I2C0"" }
-    ]
-}";
+public const string CONNECTION_CONFIG = @"{""board_name"":""Wio Link v1.0"",""connections"":[{""sku"":""101020003"",""port"":""D0""},{""sku"":""104990089"",""port"":""D2""},{""sku"":""101020083"",""port"":""I2C0""}]}";
 
 public string EscapeJson(string json)
 {
