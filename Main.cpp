@@ -11,7 +11,7 @@ const char* DEFAULT_COLOR = "FF8F07";
 uint32_t time;
 
 bool lightOn = false;
-bool strict = false;
+bool strict = true;
 char* color = DEFAULT_COLOR;
 
 // set the state of the light (on or off)

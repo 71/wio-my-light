@@ -6,6 +6,9 @@ It allows you to control your light (in my case, the Grove "WS2812 LED Strip 60"
 - Button (using the Grove "Button")
 - Internet (using the API)
 
+# Connections
+![](connections.png)
+
 # How to?
 
 ### 1. Clone this repository
@@ -25,7 +28,7 @@ It'll take some time. You can check the status using this command:
 
     curl https://us.wio.seeed.io/v1/ota/status?access_token=[device token]
 
-### 4. Voil‡!
+### 4. Voil√†!
 Done, your device has now both offline and online support! Now let's add a few features!
 
 ##### Toggle light from the Internet
@@ -37,15 +40,18 @@ Done, your device has now both offline and online support! Now let's add a few f
     curl https://us.wio.seeed.io/v1/node/function/color?access_token=[device token] -d arg="FFFFFF"
 
 ##### Enable / disable strict mode
-In my case, the gesture often triggered itself without any reason.  
+In my case, the gesture often triggered itself without any reason.
 I thus added a "strict mode" to the program, that I enable when I'm not in the room.
 
-When enabled, the gesture will not work to turn on the light. Only the button and the Internet will work.  
+When enabled, the gesture will not work to turn on the light. Only the button and the Internet will work.
 When disabled, everything will work.
 
 You can enable / disable strict mode using the API:
 
     curl -X POST https://us.wio.seeed.io/v1/node/variable/strict/[0 or 1]?access_token=[device token]
+
+Due to [#27](https://github.com/Seeed-Studio/Wio_Link/issues/27), the device randomly reboots, and the variable `strict` is lost. That's why for now,
+`strict` is true by default.
 
 # Notes
 The loop is only called every 400ms. That means some gestures won't get recognized, and the button must be pressed a bit longer to trigger the event.
