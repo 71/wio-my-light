@@ -81,6 +81,13 @@ public async Task Deploy(string token)
     Environment.Exit(0);
 }
 
-public const string CONNECTION_CONFIG = @"{""board_name"":""Wio Link v1.0"",""connections"":[{""sku"":""101020040"",""port"":""D2""},{""sku"":""104990089"",""port"":""D1""}]}";
+public const string CONNECTION_CONFIG = @"{
+  ""board_name"": ""Wio Link v1.0"",
+  ""connections"": [
+    {""sku"":""101020030"", ""port"":""I2C0""},
+    {""sku"":""101020040"", ""port"":""D2""},
+    {""sku"":""104990089"", ""port"":""D1""}
+  ]
+}";
 
 public string EscapeJson(string json) => json.Replace("\r", String.Empty).Replace("\"", "\\\"").Replace("\n", "\\n");

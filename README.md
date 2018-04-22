@@ -5,7 +5,7 @@ It allows you to control your light (in my case, the Grove "WS2812 LED Strip 60"
 IR distance interrupter: getting near the sensor will toggle the light.
 
 # Connections
-Leds to D1, and sensor to D2.
+Leds to D1, sensor to D2, and digital light sensor to IC2.
 
 # How to?
 
