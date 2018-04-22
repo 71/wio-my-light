@@ -76,13 +76,11 @@ public async Task Deploy(string token)
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("Build has been started. You can check its state using the following command:");
     Console.WriteLine($"curl {SERVER}/ota/status?access_token={token}");
+    Console.ResetColor();
 
     Environment.Exit(0);
 }
 
-public const string CONNECTION_CONFIG = @"{""board_name"":""Wio Link v1.0"",""connections"":[{""sku"":""101020003"",""port"":""D0""},{""sku"":""104990089"",""port"":""D2""},{""sku"":""101020083"",""port"":""I2C0""}]}";
+public const string CONNECTION_CONFIG = @"{""board_name"":""Wio Link v1.0"",""connections"":[{""sku"":""101020040"",""port"":""D2""},{""sku"":""104990089"",""port"":""D1""}]}";
 
-public string EscapeJson(string json)
-{
-    return json.Replace("\r", String.Empty).Replace("\"", "\\\"").Replace("\n", "\\n");
-}
+public string EscapeJson(string json) => json.Replace("\r", String.Empty).Replace("\"", "\\\"").Replace("\n", "\\n");

@@ -1,5 +1,5 @@
 /*
- * grove_button.h
+ * grove_ir_distance_intr.h
  *
  * Copyright (c) 2012 seeed technology inc.
  * Website    : www.seeed.cc
@@ -27,43 +27,43 @@
  */
 
 
-#ifndef __GROVE_BUTTON_H__
-#define __GROVE_BUTTON_H__
+#ifndef __GROVE_IR_DIST_INTR_H__
+#define __GROVE_IR_DIST_INTR_H__
 
 #include "suli2.h"
 
-//GROVE_NAME        "Grove-Button"
-//SKU               101020003
+//GROVE_NAME        "Grove-IR Distance Interrupter"
+//SKU               101020040
 //IF_TYPE           GPIO
-//IMAGE_URL         http://www.seeedstudio.com/wiki/images/thumb/c/ca/Button.jpg/300px-Button.jpg
-//DESCRIPTION       "Grove Button is a momentary push button. It contains one independent "momentary on/off" button. “Momentary” means that the button rebounds on its own after it is released. The button outputs a HIGH signal when pressed, and LOW when released."
-//WIKI_URL          http://www.seeedstudio.com/wiki/Grove_-_Button
+//IMAGE_URL         https://raw.githubusercontent.com/Seeed-Studio/Grove_Drivers_for_Wio/static/images/grove-ir_distance_interruper.jpg
+//DESCRIPTION       "Grove - IR Distance Interrupter is used to detect any object blocking the path of light. The module consists of an IR LED and a photosensor (phototransistor) pair. The light emitted by the IR LED gets reflected by any object placed in front of the sensor and this reflection is detected by the photosensor(phototransistor). Any white (or lighter) colored surface reflects more than black (or darker) colored surface."
+//WIKI_URL          http://www.seeedstudio.com/wiki/Grove_-_IR_Distance_Interrupter_v1.2
 //ADDED_AT          "2015-10-01"
 //AUTHOR            "SEEED"
 
-class GroveButton
+class GroveIRDistanceInterrupter
 {
 public:
-    GroveButton(int pin);
+    GroveIRDistanceInterrupter(int pin);
 
     /**
-     * Get the status of button
+     * Read the status if a object is approaching the sensor.
      *
-     * @param pressed - 1: pressed, 0: not
+     * @param approach - 1: something approached 0: not
      *
      * @return bool
      */
-    bool read_pressed(uint8_t *pressed);
+    bool read_approach(uint8_t *approach);
 
     /**
-     * Event which is triggered when the button is pressed,
-     * event data is the number of PIN where the button is attached.
+     * Triggered when IR object approach the sensor.
      */
-    DEFINE_EVENT(button_pressed, SULI_EDT_INT);
+    DEFINE_EVENT(ir_approached, SULI_EDT_INT);
     IO_T *io;
     uint32_t time;
 };
 
-static void button_interrupt_handler(void *para);
+static void approach_interrupt_handler(void *para);
+
 
 #endif

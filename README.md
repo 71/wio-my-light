@@ -1,19 +1,17 @@
 # Wio-my-light
 A program I made for my [Wio Link](http://seeed-studio.github.io/Wio_Link).
 
-It allows you to control your light (in my case, the Grove "WS2812 LED Strip 60") with:
-- Gestures (using the Grove "Gesture v1.0")
-- Button (using the Grove "Button")
-- Internet (using the API)
+It allows you to control your light (in my case, the Grove "WS2812 LED Strip 60") with an
+IR distance interrupter: getting near the sensor will toggle the light.
 
 # Connections
-![](connections.png)
+Leds to D1, and sensor to D2.
 
 # How to?
 
 ### 1. Clone this repository
 
-    git clone https://github.com/6A/wio-my-light.git`
+    git clone https://github.com/6A/wio-my-light.git
 
 ### 2. Push program to device
 
@@ -29,30 +27,4 @@ It'll take some time. You can check the status using this command:
     curl https://us.wio.seeed.io/v1/ota/status?access_token=[device token]
 
 ### 4. Voilà!
-Done, your device has now both offline and online support! Now let's add a few features!
-
-##### Toggle light from the Internet
-
-    curl https://us.wio.seeed.io/v1/node/function/toggle?access_token=[device token] -d arg="none"
-
-##### Change color from the Internet
-
-    curl https://us.wio.seeed.io/v1/node/function/color?access_token=[device token] -d arg="FFFFFF"
-
-##### Enable / disable strict mode
-In my case, the gesture often triggered itself without any reason.
-I thus added a "strict mode" to the program, that I enable when I'm not in the room.
-
-When enabled, the gesture will not work to turn on the light. Only the button and the Internet will work.
-When disabled, everything will work.
-
-You can enable / disable strict mode using the API:
-
-    curl -X POST https://us.wio.seeed.io/v1/node/variable/strict/[0 or 1]?access_token=[device token]
-
-Due to [#27](https://github.com/Seeed-Studio/Wio_Link/issues/27), the device randomly reboots, and the variable `strict` is lost. That's why for now,
-`strict` is true by default.
-
-# Notes
-The loop is only called every 400ms. That means some gestures won't get recognized, and the button must be pressed a bit longer to trigger the event.
-You can change this if you want to.
+Done, your device now has offline toggling support!
